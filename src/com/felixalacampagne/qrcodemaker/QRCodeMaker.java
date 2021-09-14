@@ -11,8 +11,18 @@ import javax.swing.ImageIcon;
 
 import io.nayuki.qrcodegen.QrCode;
 
+/**
+ *              QRCodeMaker
+ * Félix à la Campagne (c) 2021
+ * 
+ * @author carmstro
+ *
+ */
+
 public class QRCodeMaker
 {
+private int border = 2;
+private int scale = 8;
 
 	public static void main(String[] args)
 	{
@@ -20,7 +30,9 @@ public class QRCodeMaker
 		
 		try
 		{
-			qrmk.createQRPNG("TestString-1234", "qr.png");
+			qrmk.setBorder(0);
+			qrmk.setScale(12);
+			qrmk.createQRPNG("             QRCodeMaker\nFélix à la Campagne (c) 2021", "qr.png");
 		}
 		catch (IOException e)
 		{
@@ -36,7 +48,7 @@ public class QRCodeMaker
 	public BufferedImage createQRImage(String msg)
 	{
 		QrCode qr0 = QrCode.encodeText(msg, QrCode.Ecc.MEDIUM);
-		BufferedImage img = toImage(qr0, 4, 2);  // See QrCodeGeneratorDemo
+		BufferedImage img = toImage(qr0, getScale(), getBorder());  // See QrCodeGeneratorDemo
 		return img;
 
 //		// Manual operation
@@ -85,5 +97,25 @@ public class QRCodeMaker
 			}
 		}
 		return result;
+	}
+
+	public int getBorder()
+	{
+		return border;
+	}
+
+	public void setBorder(int border)
+	{
+		this.border = border;
+	}
+
+	public int getScale()
+	{
+		return scale;
+	}
+
+	public void setScale(int scale)
+	{
+		this.scale = scale;
 	}	
 }
