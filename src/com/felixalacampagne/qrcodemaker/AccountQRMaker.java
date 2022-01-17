@@ -40,27 +40,27 @@ public class AccountQRMaker extends QRCodeMakerGUI
 		String communication="";
 		
 		Matcher match;
-		match = Pattern.compile("(?m)^Amount: \\s*(\\d*,\\d*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Amount:\\s*(\\d*,\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			amount = match.group(1);
 			amount = amount.replace(",", ".");
 		}
 		
-		match = Pattern.compile("(?m)^Account: \\s*([A-Z]{2,2}\\d*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Account:\\s+([A-Z]{2,2}\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			account = match.group(1);
 			account = account.toLowerCase();
 		}		
 		
-		match = Pattern.compile("(?m)^Address: \\s*(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Address:\\s+(.*)$").matcher(msg);
 		if(match.find())
 		{
 			recipname = match.group(1);
 		}		
 		
-		match = Pattern.compile("(?m)^Communication: \\s*(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Communication:\\s+(.*)$").matcher(msg);
 		if(match.find())
 		{
 			communication = match.group(1);
