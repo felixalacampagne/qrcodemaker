@@ -37,7 +37,8 @@ public class AccountQRMaker extends QRCodeMakerGUI
 		String recipname="";
 		String account="";
 		String amount="";
-		String communication="";
+		String commff="";
+		String commst="";
 		
 		Matcher match;
 		match = Pattern.compile("(?m)^Amount:\\s*(\\d*,\\d*)$").matcher(msg);
@@ -63,13 +64,19 @@ public class AccountQRMaker extends QRCodeMakerGUI
 		match = Pattern.compile("(?m)^Communication:\\s+(.*)$").matcher(msg);
 		if(match.find())
 		{
-			communication = match.group(1);
+			commff = match.group(1);
+			match = Pattern.compile("^(\\d{3,3})(\\d{4,4})(\\d{5,5})$").matcher(commff);
+			if(match.find())
+			{
+			   commst = String.format("+++ %s / %s / %s +++", match.group(1), match.group(2), match.group(3));
+			   commff = "";
+			}
 		}		
 		
-		// Name of recipient, account, amount, communication
-		String epctmpl = "BCD\n001\n1\nSCT\n\n%s\n%s\nEUR%s\n\n%s\n\n";
+		// Name of recipient, account, amount, struct comm, freeformat comm
+		String epctmpl = "BCD\n002\n1\nSCT\n\n%s\n%s\nEUR%s\n\n%s\n%s\nBeneToOrigIgnored\n";
 
-		epc = String.format(epctmpl, recipname, account, amount, communication);
+		epc = String.format(epctmpl, recipname, account, amount, commst, commff);
 		return epc;
 	}	
 }
