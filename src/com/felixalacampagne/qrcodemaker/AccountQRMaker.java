@@ -65,11 +65,27 @@ public class AccountQRMaker extends QRCodeMakerGUI
 		if(match.find())
 		{
 			commff = match.group(1);
-			match = Pattern.compile("^(\\d{3,3})(\\d{4,4})(\\d{5,5})$").matcher(commff);
+			match = Pattern.compile("^(\\d{10,10})(\\d{2,2})$").matcher(commff);
 			if(match.find())
 			{
-			   commst = String.format("+++ %s / %s / %s +++", match.group(1), match.group(2), match.group(3));
-			   commff = "";
+			   // According to 'febelfin.be' the structured communication is called 'OGM-VCS' and
+			   // is a 10digit number plus 2digit modulo 97 of the number (97 if modulo is zero) making
+			   // 12 digits in all. The "+++ / / +++"decoration should only be used for display - the bare number is
+			   // used in electronic communications. So I think just providing the number should be enough
+			   // maybe checking the modulo and putting it on the reference line will help. 
+			   long nreference = 0;
+			   String reference = match.group(1);
+			   String modulo = match.group(2);
+
+		      nreference += Long.valueOf(reference);
+			   
+		      nreference = nreference % 97;
+		      nreference = nreference==0 ? 97 : nreference;
+			   if(nreference == Long.valueOf( modulo))
+			   {
+   			   commst = String.format("%s%s", reference, modulo);
+   			   commff = "";
+			   }
 			}
 		}		
 		
