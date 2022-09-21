@@ -1,6 +1,5 @@
 /bin/
 /qr.png
-/QRCodeMaker.jar
+/*.jar
 /qrcodemaker/
-/AccountQRMaker.jar
-/QRCodeMaker.zip
+/*.zip

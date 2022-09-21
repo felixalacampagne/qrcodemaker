@@ -25,7 +25,7 @@ public class QRCodeMakerGUI
 	final JFrame frame = new JFrame();
 	ImageIcon mQRImg;
 	JLabel lblBackground;
-
+	boolean bExitOnClose = true;
 	
 	public QRCodeMakerGUI()
 	{
@@ -43,11 +43,20 @@ public class QRCodeMakerGUI
 	      	  {
 	        			frame.setVisible(false);
 	        			frame.dispose();
-	        			System.exit(0);
+	        			if(bExitOnClose)
+	        			{
+	        				System.exit(0);
+	        			}
 	      	  }
 	        }
 	    };		
 	    frame.addMouseListener(ml);
+	}
+	
+	public QRCodeMakerGUI(boolean exitOnClose)
+	{
+		super();
+		bExitOnClose = exitOnClose;
 	}
 	
 	public void setQRMessage(String msg)
