@@ -13,7 +13,7 @@ import io.nayuki.qrcodegen.QrCode;
 
 /**
  *              QRCodeMaker
- * Félix à la Campagne (c) 2021
+ * FÃ©lix Ã  la Campagne (c) 2021
  * 
  * @author carmstro
  *
@@ -32,7 +32,7 @@ private int scale = 8;
 		{
 			qrmk.setBorder(0);
 			qrmk.setScale(12);
-			qrmk.createQRPNG("             QRCodeMaker\nFélix à la Campagne (c) 2021", "qr.png");
+			qrmk.createQRPNG("             QRCodeMaker\nFÃ©lix Ã  la Campagne (c) 2021", "qr.png");
 		}
 		catch (IOException e)
 		{
