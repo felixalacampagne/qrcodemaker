@@ -12,7 +12,7 @@
                 <attribute name="Main-Class" value="com.felixalacampagne.qrcodemaker.AccountQRMaker"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="${dir.jarfile}/bin"/>
+            <fileset dir="${dir.jarfile}/target/classes"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.junit.jupiter.api_5.7.1.v20210222-1948.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.junit.jupiter.engine_5.7.1.v20210222-1948.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.junit.jupiter.migrationsupport_5.7.1.v20210222-1948.jar"/>
@@ -27,6 +27,9 @@
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.apiguardian_1.1.0.v20190826-0900.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.junit_4.13.0.v20200204-1500.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="C:/Development/eclipse/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/maven/repository/com/fasterxml/jackson/core/jackson-databind/2.13.3/jackson-databind-2.13.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/maven/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.3/jackson-annotations-2.13.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/maven/repository/com/fasterxml/jackson/core/jackson-core/2.13.3/jackson-core-2.13.3.jar"/>
         </jar>
     </target>
 </project>

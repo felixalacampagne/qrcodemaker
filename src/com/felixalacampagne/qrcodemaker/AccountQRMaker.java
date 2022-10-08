@@ -69,7 +69,8 @@ public class AccountQRMaker extends QRCodeMakerGUI
       }
 
       // Name of recipient, account, amount, struct comm, freeformat comm
-      String epctmpl = "BCD\n002\n1\nSCT\n\n%s\n%s\nEUR%s\n\n%s\n%s\nBeneToOrigIgnored\n";
+      //String epctmpl = "BCD\n002\n1\nSCT\n\n%s\n%s\nEUR%s\n\n%s\n%s\nBeneToOrigIgnored\n";
+      String epctmpl = "BCD\n002\n1\nSCT\n\n%s\n%s\nEUR%s\n\n%s\n%s\n\n";
 
       String epc = String.format(epctmpl, txn.getName(), txn.getIban(), txn.getAmount(), commst, commff);
       return epc; 		
@@ -85,27 +86,28 @@ public class AccountQRMaker extends QRCodeMakerGUI
       String communication="";
 		
 		Matcher match;
-		match = Pattern.compile("(?m)^Amount: \\s*(\\d*,\\d*)$").matcher(msg);
+		// Something has started putting tabs in place of spaces!!!
+		match = Pattern.compile("(?m)^Amount:\\s+(\\d*,\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			amount = match.group(1);
 			amount = amount.replace(",", ".");
 		}
 		
-		match = Pattern.compile("(?m)^Account: \\s*([A-Z]{2,2}\\d*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Account:\\s+([A-Z]{2,2}\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			account = match.group(1);
 			account = account.toLowerCase();
 		}		
 		
-		match = Pattern.compile("(?m)^Address: \\s*(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Address:\\s+(.*)$").matcher(msg);
 		if(match.find())
 		{
 			recipname = match.group(1);
 		}		
 		
-		match = Pattern.compile("(?m)^Communication: \\s*(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Communication:\\s+(.*)$").matcher(msg);
       if(match.find())
       {
          communication = match.group(1);
