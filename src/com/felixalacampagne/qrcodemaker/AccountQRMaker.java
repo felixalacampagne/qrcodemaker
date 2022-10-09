@@ -86,28 +86,35 @@ public class AccountQRMaker extends QRCodeMakerGUI
       String communication="";
 		
 		Matcher match;
-		// Something has started putting tabs in place of spaces!!!
-		match = Pattern.compile("(?m)^Amount:\\s+(\\d*,\\d*)$").matcher(msg);
+		// There must be some whitespace between the label and the value. Originally
+		// at least one space was required but something has changed and now only
+		// tabs are present (might be a conversion done by the editor I was using for
+		// testing). 'whitespace' also includes CR and LF which appears to work!
+		// Allowing CRLF after the label might be a bad idea where empty values are
+		// used as it might match upto the next label which will then be taken as the
+		// value, which is not the idea! Luckily there is the concept of 'horizontal whitespace'
+		// which does not include LF or CR (strangely, since CR is only a horizontal movement)
+		match = Pattern.compile("(?m)^Amount:\\h+(\\d*,\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			amount = match.group(1);
 			amount = amount.replace(",", ".");
 		}
 		
-		match = Pattern.compile("(?m)^Account:\\s+([A-Z]{2,2}\\d*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Account:\\h+([a-zA-Z]{2,2}\\d*)$").matcher(msg);
 		if(match.find())
 		{
 			account = match.group(1);
 			account = account.toLowerCase();
 		}		
 		
-		match = Pattern.compile("(?m)^Address:\\s+(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Address:\\h+(.*)$").matcher(msg);
 		if(match.find())
 		{
 			recipname = match.group(1);
 		}		
 		
-		match = Pattern.compile("(?m)^Communication:\\s+(.*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Communication:\\h+(.*)$").matcher(msg);
       if(match.find())
       {
          communication = match.group(1);
