@@ -129,7 +129,7 @@ public class AccountQRMakerGUI extends JFrame
 		// .EXIT_ON_CLOSE means can't save history before exit so it's saved each time QR code is displayed
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationByPlatform(true);
-		this.getContentPane().setPreferredSize(new Dimension(450, 140));
+		this.getContentPane().setPreferredSize(new Dimension(600, 140));
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
 	   JPanel pnl;
@@ -145,6 +145,15 @@ public class AccountQRMakerGUI extends JFrame
 		// be a better way!
 		cmbHistory.addActionListener(historySelected);
 		cmbHistory.setEditable(false);
+		
+		// This helps the dropdown button stay in the frame. Now the list needs a horizontal scrollbar
+		// which you would think would be automatic, but true half-assed nature of all Java implementations
+		// it's actually a shirt load of extra stuff which is needed to enable the display of the content of the list
+		// - forking typical (see commented SampleJComboBoxWithScrollBar below). 
+		// That is definitely for another day!! 
+		// For now make the window wider so most items will display fully
+		cmbHistory.setPrototypeDisplayValue(new HistoryItem(1, ""));
+
 		lbl = new JLabel("History:");
 		lbl.setLabelFor(cmbHistory);
 	   pnl = new JPanel();
@@ -301,4 +310,70 @@ public class AccountQRMakerGUI extends JFrame
 		}
 	}
 
+//   class SampleJComboBoxWithScrollBar extends JComboBox {
+//
+//      SampleJComboBoxWithScrollBar() {
+//          super();
+//          this.addPopupMenuListener(this.getPopupMenuListener());
+//          this.adjustScrollBar();
+//      }
+//
+//      private void adjustPopupWidth() {
+//          if (getItemCount() == 0) {
+//              return;
+//          }
+//          Object comp = getUI().getAccessibleChild(this, 0);
+//          if (!(comp instanceof JPopupMenu)) {
+//              return;
+//          }
+//          JPopupMenu popup = (JPopupMenu) comp;
+//          JScrollPane scrollPane = (JScrollPane) popup.getComponent(0);
+//          Object value = getItemAt(0);
+//          Component rendererComp = getRenderer().getListCellRendererComponent(new JList(), value, 0, false, false);
+//          if (rendererComp instanceof JXTable) {
+//              scrollPane.setColumnHeaderView(((JTable) rendererComp).getTableHeader());
+//          }
+//          Dimension prefSize = rendererComp.getPreferredSize();
+//          Dimension size = scrollPane.getPreferredSize();
+//          size.width = Math.max(size.width, prefSize.width);
+//          scrollPane.setPreferredSize(size);
+//          scrollPane.setMaximumSize(size);
+//          scrollPane.revalidate();
+//      }
+//
+//      private void adjustScrollBar() {
+//          if (getItemCount() == 0) {
+//              return;
+//          }
+//          Object comp = getUI().getAccessibleChild(this, 0);
+//          if (!(comp instanceof JPopupMenu)) {
+//              return;
+//          }
+//          JPopupMenu popup = (JPopupMenu) comp;
+//          JScrollPane scrollPane = (JScrollPane) popup.getComponent(0);
+//          scrollPane.setHorizontalScrollBar(new JScrollBar(JScrollBar.HORIZONTAL));
+//          scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//      }
+//
+//      private PopupMenuListener getPopupMenuListener() {
+//
+//          return new PopupMenuListener() {
+//
+//              @Override
+//              public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+//                  adjustPopupWidth();
+//              }
+//
+//              @Override
+//              public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+//              }
+//
+//              @Override
+//              public void popupMenuCanceled(PopupMenuEvent e) {
+//              }
+//          };
+//
+//      }
+//  }	
+	
 }
