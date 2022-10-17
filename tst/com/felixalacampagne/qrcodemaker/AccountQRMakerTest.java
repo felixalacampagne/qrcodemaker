@@ -183,7 +183,7 @@ class AccountQRMakerTest
 				+ "\n";
 		epc = accQR.makeEPCFromAccount(tst);
 		System.out.println("EPC equivalent is:\n" + epc);
-		assertEquals(result, epc);			
+		assertEquals(result, epc);
 	}
 
    @Test
@@ -241,7 +241,50 @@ class AccountQRMakerTest
       epc = accQR.makeEPCFromAccount(tst);
       System.out.println("EPC equivalent is:\n" + epc);
       assertEquals(result, epc);
-      
-      
+
+      tst ="Amount:        100,56\r\n"
+            + "Date:\r\n"
+            + "Account:        BE14   9501    0644    3283\r\n"
+            + "Address:        Beobank MC\r\n"
+            + "Communication:    800025807031\r\n"
+            + "\r\n"
+            + "";
+
+      result = "BCD\n"
+            + "002\n"
+            + "1\n"
+            + "SCT\n"
+            + "\n"
+            + "Beobank MC\n"
+            + "be14950106443283\n"
+            + "EUR100.56\n"
+            + "\n"
+            + "800025807031\n"
+            + "\n"
+            + "\n";
+      epc = accQR.makeEPCFromAccount(tst);
+      System.out.println("EPC equivalent is:\n" + epc);
+      assertEquals(result, epc);
+
+   }
+
+   @Test
+   void testDisplayIBAN()
+   {
+   	String dispiban;
+   	AccountTransaction atxn;
+
+   	atxn = new AccountTransaction("test", "be12345678901234", "0,00", "test");
+   	dispiban = atxn.displayIBAN();
+   	assertEquals("BE12 3456 7890 1234", dispiban);
+
+   	atxn = new AccountTransaction("test", "be1234567890123456", "0,00", "test");
+   	dispiban = atxn.displayIBAN();
+   	assertEquals("BE12 3456 7890 1234 56", dispiban);
+
+   	atxn = new AccountTransaction("test", "be1234567", "0,00", "test");
+   	dispiban = atxn.displayIBAN();
+   	assertEquals("BE12 3456 7", dispiban);
+
    }
 }
