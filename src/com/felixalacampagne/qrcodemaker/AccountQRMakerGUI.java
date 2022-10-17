@@ -115,7 +115,7 @@ public class AccountQRMakerGUI extends JFrame
 	      {
 		      AccountTransaction txn = this.transHistory.get(item.getIndex());
 		      this.txtName.setText(txn.getName());
-		      this.txtIBAN.setText(txn.getIban());
+		      this.txtIBAN.setText(txn.displayIBAN());
 		      this.txtCommunication.setText(txn.getCommunication());
 	      }
    	}
@@ -213,30 +213,6 @@ public class AccountQRMakerGUI extends JFrame
 
 	protected void addToTransactionHistory(AccountTransaction txn)
 	{
-//		transHistory = transHistory.stream()
-//			.filter(h-> !(h.getIban().equals(txn.getIban())))
-//			.collect(Collectors.toList());
-//		transHistory.add(txn);
-		// Creates a new List each time which is not likely to be a problem given the
-		// likely number of elements but I find a bit ugly. stream() is not really
-		// well suited to this.
-
-//		// So maybe the old fashioned way doesn't look much better
-//		int existing = -1;
-//		for(int i = 0; i < transHistory.size(); i++)
-//		{
-//			if(transHistory.get(i).getIban().equals(txn.getIban()))
-//			{
-//				existing = i;
-//				break;
-//			}
-//		}
-//		if(existing >= 0)
-//		{
-//			transHistory.remove(existing);
-//		}
-
-		// Compromise, a bit of new and a bit of old
 		Optional<AccountTransaction> oldtxn = transHistory.stream()
 				.filter(h-> (h.getIban().equals(txn.getIban())))
 				.findFirst();
