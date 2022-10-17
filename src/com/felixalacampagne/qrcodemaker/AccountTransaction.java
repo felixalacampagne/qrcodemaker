@@ -19,8 +19,8 @@ public class AccountTransaction
 	public AccountTransaction(String name, String iban, String amount, String communication)
 	{
 		this.name = name;
-		this.iban = iban;
-		this.amount = amount;
+		this.iban = normalizeIBAN(iban);
+		this.amount = normalizeAmount(amount);
 		this.communication = communication;
 
 	}
@@ -51,4 +51,25 @@ public class AccountTransaction
 		return name + " : " + iban + " : " + communication;
 	}
 
+	protected String normalizeIBAN(String iban)
+	{
+	   iban = iban.toLowerCase().replaceAll("\\s", "");
+	   return iban;
+	}
+	
+   protected String normalizeAmount(String amt)
+   {
+      String amount = amt.replace(",", ".");
+      if(!amount.contains("."))
+      {
+         amount += ".00";
+      }
+      else
+      {
+         amount += "00";
+         int dotpos = amount.indexOf(".");
+         amount = amount.substring(0, dotpos+3);
+      }  
+      return amount;
+   }	
 }

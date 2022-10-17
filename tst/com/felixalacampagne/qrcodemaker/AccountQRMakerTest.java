@@ -13,7 +13,7 @@ class AccountQRMakerTest
 		String result;
 		String tst ="Amount:        1,00\r\n"
 				+ "Date:\r\n"
-				+ "Account:        BE14950106443283\r\n"
+				+ "Account:        be14950106443283\r\n"
 				+ "Address:        Beobank MC\r\n"
 				+ "Communication:    800025807031\r\n"
 				+ "\r\n"
@@ -183,6 +183,65 @@ class AccountQRMakerTest
 				+ "\n";
 		epc = accQR.makeEPCFromAccount(tst);
 		System.out.println("EPC equivalent is:\n" + epc);
-		assertEquals(result, epc);			}
+		assertEquals(result, epc);			
+	}
 
+   @Test
+   void testMakeEPCFromAccountIBAN()
+   {
+      String tst;
+      String epc;
+      String result;
+      AccountQRMaker accQR = new AccountQRMaker();
+
+      tst ="Amount:        100,12\r\n"
+            + "Date:\r\n"
+            + "Account:        BE14950106443283\r\n"
+            + "Address:        Beobank MC\r\n"
+            + "Communication:    800025807031\r\n"
+            + "\r\n"
+            + "";
+
+      result = "BCD\n"
+            + "002\n"
+            + "1\n"
+            + "SCT\n"
+            + "\n"
+            + "Beobank MC\n"
+            + "be14950106443283\n"
+            + "EUR100.12\n"
+            + "\n"
+            + "800025807031\n"
+            + "\n"
+            + "\n";
+      epc = accQR.makeEPCFromAccount(tst);
+      System.out.println("EPC equivalent is:\n" + epc);
+      assertEquals(result, epc);
+
+      tst ="Amount:        100,34\r\n"
+            + "Date:\r\n"
+            + "Account:        BE14 9501 0644 3283\r\n"
+            + "Address:        Beobank MC\r\n"
+            + "Communication:    800025807031\r\n"
+            + "\r\n"
+            + "";
+
+      result = "BCD\n"
+            + "002\n"
+            + "1\n"
+            + "SCT\n"
+            + "\n"
+            + "Beobank MC\n"
+            + "be14950106443283\n"
+            + "EUR100.34\n"
+            + "\n"
+            + "800025807031\n"
+            + "\n"
+            + "\n";
+      epc = accQR.makeEPCFromAccount(tst);
+      System.out.println("EPC equivalent is:\n" + epc);
+      assertEquals(result, epc);
+      
+      
+   }
 }
