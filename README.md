@@ -1,7 +1,7 @@
 # qrcodemaker
 Generate QR code for clipboard content, EPC data etc
 
-** 17-Oct-2022** renamed the default branch to 'main' from 'master' to replace the original default branch created by GitHub and which the 'master' branch could not be merged into dues to 'completely different histories' or some such git related nonesense.
+**17-Oct-2022** renamed the default branch to 'main' from 'master' to replace the original default branch created by GitHub and which the 'master' branch could not be merged into dues to 'completely different histories' or some such git related nonesense.
 
 GitHub suggests the following to update a clone which is using master as the default branch;
 
