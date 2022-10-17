@@ -1,6 +1,15 @@
 # qrcodemaker
 Generate QR code for clipboard content, EPC data etc
 
+** 17-Oct-2022** renamed the default branch to 'main' from 'master' to replace the original default branch created by GitHub and which the 'master' branch could not be merged into dues to 'completely different histories' or some such git related nonesense.
+
+GitHub suggests the following to update a clone which is using master as the default branch;
+
+    git branch -m master main
+    git fetch origin
+    git branch -u origin/main main
+    git remote set-head origin -a
+
 **20-Sep-2022** added a crude GUI for the generation of a mobile payment QR code, ie. the EPC format. As part of this the project was converted
 to a Maven project. The maven project builds a 'runnable jar' for the AccountQRMakerGUI application. The original application
 which simply displays a QR code for the clipboard content is still present and can be built by running the ant task 'QRCodemaker.xml'
