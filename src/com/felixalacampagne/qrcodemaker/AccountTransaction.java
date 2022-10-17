@@ -48,15 +48,15 @@ public class AccountTransaction
 	@Override
 	public String toString()
 	{
-		return name + " : " + iban + " : " + communication;
+		return name + " : " + displayIBAN() + " : " + communication;
 	}
 
 	protected String normalizeIBAN(String iban)
 	{
-	   iban = iban.toLowerCase().replaceAll("\\s", "");
+	   iban = iban.toLowerCase().replaceAll(" ", "");
 	   return iban;
 	}
-	
+
    protected String normalizeAmount(String amt)
    {
       String amount = amt.replace(",", ".");
@@ -69,7 +69,12 @@ public class AccountTransaction
          amount += "00";
          int dotpos = amount.indexOf(".");
          amount = amount.substring(0, dotpos+3);
-      }  
+      }
       return amount;
-   }	
+   }
+
+   public String displayIBAN()
+   {
+   	return iban.replaceAll("([a-z\\d]{4,4})", "$0 ").toUpperCase().trim();
+   }
 }
