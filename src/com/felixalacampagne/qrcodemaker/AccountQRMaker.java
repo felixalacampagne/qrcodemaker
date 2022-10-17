@@ -76,6 +76,8 @@ public class AccountQRMaker extends QRCodeMakerGUI
       return epc;
 	}
 
+
+	
 	public String makeEPCFromAccount(String accountDetails)
 	{
 		String msg = accountDetails;
@@ -98,20 +100,9 @@ public class AccountQRMaker extends QRCodeMakerGUI
 		if(match.find())
 		{
 			amount = match.group(1);
-			amount = amount.replace(",", ".");
-			if(!amount.contains("."))
-			{
-				amount += ".00";
-			}
-			else
-			{
-				amount += "00";
-				int dotpos = amount.indexOf(".");
-				amount = amount.substring(0, dotpos+3);
-			}
 		}
 
-		match = Pattern.compile("(?m)^Account:\\h+([a-zA-Z]{2,2}\\d*)$").matcher(msg);
+		match = Pattern.compile("(?m)^Account:\\h+([a-zA-Z]{2,2}\\d[ \\d]+)$").matcher(msg);
 		if(match.find())
 		{
 			account = match.group(1);
