@@ -41,12 +41,6 @@
 			<plugin>
 			   <artifactId>maven-assembly-plugin</artifactId>
 			   <configuration>
-			      <archive>
-			         <manifest>
-			            <mainClass>com.felixalacampagne.qrcodemaker.AccountQRMakerGUI</mainClass>
-			         </manifest>
-			      </archive>
-			      <finalName>../AccountQRMakerGUI</finalName>
 			      <appendAssemblyId>false</appendAssemblyId>
 			      <descriptorRefs>
 			         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -54,15 +48,55 @@
 			   </configuration>
 			   <!-- This magic means the combined jar is built as part of the 
 			        normal 'clean install' build of the parent project (see FLACtagger pom.xml for more details).
+			        
+			        The original project was used to produce a number of slightly different variations of the app
+			        which allowed double click invocation in the appropriate mode, eg. QR of clipboard, QR EPC of
+			        account information on the clipboard, GUI to enter transaction details and show QR.
+			        Rather than mess with sub-projects etc. I just want to generate all variations each time
+			        a build is performed. This is acheived by using multiple execution blocks with the different
+			        configurations required for each app. According to the internet this is highly frowned upon
+			        however it seems to work like a charm!!
 			   -->
 			   <executions>
 			      <execution>
-			         <id>make-assembly</id>
+			         <id>make-AccountQRMakerGUI</id>
 			         <phase>package</phase>
-			         <goals>
-			            <goal>single</goal>
-			         </goals>
+			         <goals><goal>single</goal></goals>
+		            <configuration>
+		               <archive>
+		                  <manifest>
+		                     <mainClass>com.felixalacampagne.qrcodemaker.AccountQRMakerGUI</mainClass>
+		                  </manifest>
+		               </archive>
+		               <finalName>../AccountQRMakerGUI</finalName>
+		            </configuration>			         
 			      </execution>
+               <execution>
+                  <id>make-AccountQRMaker</id>
+                  <phase>package</phase>
+                  <goals><goal>single</goal></goals>
+                  <configuration>
+                     <archive>
+                        <manifest>
+                           <mainClass>com.felixalacampagne.qrcodemaker.AccountQRMaker</mainClass>
+                        </manifest>
+                     </archive>
+                     <finalName>../AccountQRMaker</finalName>
+                  </configuration>                 
+               </execution>			      
+               <execution>
+                  <id>make-QRCodeMaker</id>
+                  <phase>package</phase>
+                  <goals><goal>single</goal></goals>
+                  <configuration>
+                     <archive>
+                        <manifest>
+                           <mainClass>com.felixalacampagne.qrcodemaker.QRCodeMakerGUI</mainClass>
+                        </manifest>
+                     </archive>
+                     <finalName>../QRCodeMaker</finalName>
+                  </configuration>                 
+               </execution>               
 			   </executions>
 			</plugin>
       </plugins>
