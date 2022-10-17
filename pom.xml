@@ -11,6 +11,7 @@
       <maven.build.timestamp.format>yy.MM.dd.HHmm</maven.build.timestamp.format>
       <timestamp>${build.localtime}</timestamp>
       <jackson-annotations-version>2.13.3</jackson-annotations-version>
+      <nayuki-qrcodegen-version>1.5.0</nayuki-qrcodegen-version>
    </properties>
    <dependencies>
 	   <dependency>
@@ -18,6 +19,11 @@
 	      <artifactId>jackson-databind</artifactId>
 	      <version>${jackson-annotations-version}</version>
 	   </dependency>
+		<dependency>
+		  <groupId>io.nayuki</groupId>
+		  <artifactId>qrcodegen</artifactId>
+		  <version>${nayuki-qrcodegen-version}</version>
+		</dependency>	   
    </dependencies>
    <build>
       <sourceDirectory>src</sourceDirectory>
