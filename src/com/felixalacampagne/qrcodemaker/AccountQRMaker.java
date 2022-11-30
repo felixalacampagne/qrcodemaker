@@ -7,45 +7,45 @@ import javax.swing.SwingUtilities;
 
 public class AccountQRMaker extends QRCodeMakerGUI
 {
-	public static void main(String[] args)
-	{
-		AccountQRMaker accQR = new AccountQRMaker();
+   public static void main(String[] args)
+   {
+      AccountQRMaker accQR = new AccountQRMaker();
 
-		String qrcontent = accQR.makeEPCFromClip();
+      String qrcontent = accQR.makeEPCFromClip();
 
-//		QRCodeMakerGUI qrmk = new QRCodeMakerGUI();
-//		String msg = Optional.of(qrmk.getClipboardText()).orElse("Please copy text for QR code onto clipboard");
+//    QRCodeMakerGUI qrmk = new QRCodeMakerGUI();
+//    String msg = Optional.of(qrmk.getClipboardText()).orElse("Please copy text for QR code onto clipboard");
       SwingUtilities.invokeLater(new Runnable(){
          @Override
-			public void run() {
-         	accQR.setQRMessage(qrcontent);
+         public void run() {
+            accQR.setQRMessage(qrcontent);
          }
      });
 
-	}
+   }
 
-	public AccountQRMaker() {
-		super();
-	}
+   public AccountQRMaker() {
+      super();
+   }
 
-	public AccountQRMaker(boolean exitonclose) {
-		super(exitonclose);
-	}
+   public AccountQRMaker(boolean exitonclose) {
+      super(exitonclose);
+   }
 
-	public String makeEPCFromClip()
-	{
-		String msg = getClipboardText();
-		return makeEPCFromAccount(msg);
-	}
+   public String makeEPCFromClip()
+   {
+      String msg = getClipboardText();
+      return makeEPCFromAccount(msg);
+   }
 
 
-	public String makeEPCFromTransaction(AccountTransaction txn)
-	{
-		// Name of recipient, account, amount, communication
-		String commst = "";
-		String commff = txn.getCommunication();
-
-		Matcher match = Pattern.compile("^(\\d{10,10})(\\d{2,2})$").matcher(commff);
+   public String makeEPCFromTransaction(AccountTransaction txn)
+   {
+      // Name of recipient, account, amount, communication
+      String commst = "";
+      String commff = txn.getCommunication();
+      String normed = commff.replaceAll("[\\s+/\\\\]", "");
+      Matcher match = Pattern.compile("^(\\d{10,10})(\\d{2,2})$").matcher(normed);
       if(match.find())
       {
          // According to 'febelfin.be' the structured communication is called 'OGM-VCS' and
@@ -74,55 +74,55 @@ public class AccountQRMaker extends QRCodeMakerGUI
 
       String epc = String.format(epctmpl, txn.getName(), txn.getIban(), txn.getAmount(), commst, commff);
       return epc;
-	}
+   }
 
 
-	
-	public String makeEPCFromAccount(String accountDetails)
-	{
-		String msg = accountDetails;
-		String epc;
-		String recipname="";
-		String account="";
-		String amount="";
+
+   public String makeEPCFromAccount(String accountDetails)
+   {
+      String msg = accountDetails;
+      String epc;
+      String recipname="";
+      String account="";
+      String amount="";
       String communication="";
 
-		Matcher match;
-		// There must be some whitespace between the label and the value. Originally
-		// at least one space was required but something has changed and now only
-		// tabs are present (might be a conversion done by the editor I was using for
-		// testing). 'whitespace' also includes CR and LF which appears to work!
-		// Allowing CRLF after the label might be a bad idea where empty values are
-		// used as it might match upto the next label which will then be taken as the
-		// value, which is not the idea! Luckily there is the concept of 'horizontal whitespace'
-		// which does not include LF or CR (strangely, since CR is only a horizontal movement)
-		match = Pattern.compile("(?m)^Amount:\\h+(\\d+([,.]\\d{0,2})?)$").matcher(msg);
-		if(match.find())
-		{
-			amount = match.group(1);
-		}
+      Matcher match;
+      // There must be some whitespace between the label and the value. Originally
+      // at least one space was required but something has changed and now only
+      // tabs are present (might be a conversion done by the editor I was using for
+      // testing). 'whitespace' also includes CR and LF which appears to work!
+      // Allowing CRLF after the label might be a bad idea where empty values are
+      // used as it might match upto the next label which will then be taken as the
+      // value, which is not the idea! Luckily there is the concept of 'horizontal whitespace'
+      // which does not include LF or CR (strangely, since CR is only a horizontal movement)
+      match = Pattern.compile("(?m)^Amount:\\h+(\\d+([,.]\\d{0,2})?)$").matcher(msg);
+      if(match.find())
+      {
+         amount = match.group(1);
+      }
 
-		match = Pattern.compile("(?m)^Account:\\h+([a-zA-Z]{2,2}\\d[ \\d]+)$").matcher(msg);
-		if(match.find())
-		{
-			account = match.group(1);
-			account = account.toLowerCase();
-		}
+      match = Pattern.compile("(?m)^Account:\\h+([a-zA-Z]{2,2}\\d[ \\d]+)$").matcher(msg);
+      if(match.find())
+      {
+         account = match.group(1);
+         account = account.toUpperCase();
+      }
 
-		match = Pattern.compile("(?m)^Address:\\h+(.*)$").matcher(msg);
-		if(match.find())
-		{
-			recipname = match.group(1);
-		}
+      match = Pattern.compile("(?m)^Address:\\h+(.*)$").matcher(msg);
+      if(match.find())
+      {
+         recipname = match.group(1);
+      }
 
-		match = Pattern.compile("(?m)^Communication:\\h+(.*)$").matcher(msg);
+      match = Pattern.compile("(?m)^Communication:\\h+(.*)$").matcher(msg);
       if(match.find())
       {
          communication = match.group(1);
       }
 
-		AccountTransaction txn = new AccountTransaction(recipname, account, amount, communication);
-		return makeEPCFromTransaction(txn);
+      AccountTransaction txn = new AccountTransaction(recipname, account, amount, communication);
+      return makeEPCFromTransaction(txn);
 
-	}
+   }
 }

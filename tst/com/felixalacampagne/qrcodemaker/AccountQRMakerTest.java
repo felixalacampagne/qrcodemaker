@@ -10,7 +10,9 @@ class AccountQRMakerTest
 	@Test
 	void testMakeEPCFromAccount()
 	{
+	   AccountQRMaker accQR = new AccountQRMaker();
 		String result;
+		String epc;
 		String tst ="Amount:        1,00\r\n"
 				+ "Date:\r\n"
 				+ "Account:        be14950106443283\r\n"
@@ -25,15 +27,14 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR1.00\n"
 				+ "\n"
 				+ "800025807031\n"
 				+ "\n"
 				+ "\n";
 
-		AccountQRMaker accQR = new AccountQRMaker();
-		String epc = accQR.makeEPCFromAccount(tst);
+		epc = accQR.makeEPCFromAccount(tst);
 		System.out.println("EPC equivalent is:\n" + epc);
 		assertEquals(result, epc);
 
@@ -50,13 +51,38 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR1.01\n"
 				+ "\n"
 				+ "\n"
 				+ "Any old text\n"
 				+ "\n";
 		epc = accQR.makeEPCFromAccount(tst);
+      System.out.println("EPC equivalent is:\n" + epc);
+      assertEquals(result, epc);
+
+      tst ="Amount:        1,00\r\n"
+            + "Date:\r\n"
+            + "Account:        be14950106443283\r\n"
+            + "Address:        Beobank MC\r\n"
+            + "Communication:    +++ 800 / 0258 / 07031 +++\r\n"
+            + "\r\n"
+            + "";
+
+      result = "BCD\n"
+            + "002\n"
+            + "1\n"
+            + "SCT\n"
+            + "\n"
+            + "Beobank MC\n"
+            + "BE14950106443283\n"
+            + "EUR1.00\n"
+            + "\n"
+            + "800025807031\n"
+            + "\n"
+            + "\n";
+
+      epc = accQR.makeEPCFromAccount(tst);
       System.out.println("EPC equivalent is:\n" + epc);
       assertEquals(result, epc);
 	}
@@ -83,7 +109,7 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR100.00\n"
 				+ "\n"
 				+ "800025807031\n"
@@ -106,7 +132,7 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR100.20\n"
 				+ "\n"
 				+ "\n"
@@ -129,7 +155,7 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR100.00\n"
 				+ "\n"
 				+ "\n"
@@ -152,7 +178,7 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR100.30\n"
 				+ "\n"
 				+ "\n"
@@ -175,7 +201,7 @@ class AccountQRMakerTest
 				+ "SCT\n"
 				+ "\n"
 				+ "Beobank MC\n"
-				+ "be14950106443283\n"
+				+ "BE14950106443283\n"
 				+ "EUR100.34\n"
 				+ "\n"
 				+ "\n"
@@ -208,7 +234,7 @@ class AccountQRMakerTest
             + "SCT\n"
             + "\n"
             + "Beobank MC\n"
-            + "be14950106443283\n"
+            + "BE14950106443283\n"
             + "EUR100.12\n"
             + "\n"
             + "800025807031\n"
@@ -232,7 +258,7 @@ class AccountQRMakerTest
             + "SCT\n"
             + "\n"
             + "Beobank MC\n"
-            + "be14950106443283\n"
+            + "BE14950106443283\n"
             + "EUR100.34\n"
             + "\n"
             + "800025807031\n"
@@ -256,7 +282,7 @@ class AccountQRMakerTest
             + "SCT\n"
             + "\n"
             + "Beobank MC\n"
-            + "be14950106443283\n"
+            + "BE14950106443283\n"
             + "EUR100.56\n"
             + "\n"
             + "800025807031\n"
