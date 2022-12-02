@@ -4,58 +4,60 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class AccountTransaction
 {
-	private String iban;
-	private String name;
+   private String iban;
+   private String name;
 
-	@JsonIgnore
-	private String amount;
-	private String communication;
+   @JsonIgnore
+   private String amount;
+   private String communication;
 
-	protected AccountTransaction()
-	{
-		// For JSON
-	}
+   protected AccountTransaction()
+   {
+      // For JSON
+   }
 
-	public AccountTransaction(String name, String iban, String amount, String communication)
-	{
-		this.name = name;
-		this.iban = normalizeIBAN(iban);
-		this.amount = normalizeAmount(amount);
-		this.communication = communication;
+   public AccountTransaction(String name, String iban, String amount, String communication)
+   {
+      this.name = name;
+      this.iban = normalizeIBAN(iban);
+      this.amount = normalizeAmount(amount);
+      this.communication = communication;
 
-	}
+   }
 
-	public String getCommunication()
-	{
-		return communication;
-	}
+   public String getCommunication()
+   {
+      return communication;
+   }
 
-	public String getAmount()
-	{
-		return amount;
-	}
+   public String getAmount()
+   {
+      return amount;
+   }
 
-	public String getIban()
-	{
-		return iban;
-	}
+   public String getIban()
+   {
+      return iban;
+   }
 
-	public String getName()
-	{
-		return name;
-	}
+   public String getName()
+   {
+      return name;
+   }
 
-	@Override
-	public String toString()
-	{
-		return name + " : " + displayIBAN() + " : " + communication;
-	}
+   @Override
+   public String toString()
+   {
+      return name + " : " + displayIBAN() + " : " + communication;
+   }
 
-	protected String normalizeIBAN(String iban)
-	{
-	   iban = iban.toLowerCase().replaceAll(" ", "");
-	   return iban;
-	}
+   protected String normalizeIBAN(String iban)
+   {
+      // Belfius rejected the account with lower case country code but
+      // accepted it with upper case. So use upper case...
+      iban = iban.toUpperCase().replaceAll(" ", "");
+      return iban;
+   }
 
    protected String normalizeAmount(String amt)
    {
@@ -75,6 +77,6 @@ public class AccountTransaction
 
    public String displayIBAN()
    {
-   	return iban.replaceAll("([a-z\\d]{4,4})", "$0 ").toUpperCase().trim();
+      return iban.replaceAll("([A-Za-z\\d]{4,4})", "$0 ").toUpperCase().trim();
    }
 }

@@ -14,7 +14,7 @@ import io.nayuki.qrcodegen.QrCode;
 /**
  *              QRCodeMaker
  * Félix à la Campagne (c) 2021
- * 
+ *
  * @author carmstro
  *
  */
@@ -24,98 +24,98 @@ public class QRCodeMaker
 private int border = 2;
 private int scale = 8;
 
-	public static void main(String[] args)
-	{
-		QRCodeMaker qrmk = new QRCodeMaker();
-		
-		try
-		{
-			qrmk.setBorder(0);
-			qrmk.setScale(12);
-			qrmk.createQRPNG("             QRCodeMaker\nFélix à la Campagne (c) 2021", "qr.png");
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+   public static void main(String[] args)
+   {
+      QRCodeMaker qrmk = new QRCodeMaker();
 
-	public ImageIcon createQRImageIcon(String msg)
-	{
-		return new ImageIcon(createQRImage(msg));
-	}
-	
-	public BufferedImage createQRImage(String msg)
-	{
-		QrCode qr0 = QrCode.encodeText(msg, QrCode.Ecc.MEDIUM);
-		BufferedImage img = toImage(qr0, getScale(), getBorder());  // See QrCodeGeneratorDemo
-		return img;
+      try
+      {
+         qrmk.setBorder(0);
+         qrmk.setScale(12);
+         qrmk.createQRPNG("             QRCodeMaker\nFélix à la Campagne (c) 2021", "qr.png");
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
 
-//		// Manual operation
-//		List<QrSegment> segs = QrSegment.makeSegments("3141592653589793238462643383");
-//		QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
-//		for (int y = 0; y < qr1.size; y++) {
-//			for (int x = 0; x < qr1.size; x++) {
-//				(... paint qr1.getModule(x, y) ...)
-//			}
-//		}		
-	}	
-	
-	public void createQRPNG(String msg, String fname) throws IOException
-	{
-		
-		RenderedImage img = createQRImage(msg);
-		ImageIO.write(img, "png", new File(fname));
+   public ImageIcon createQRImageIcon(String msg)
+   {
+      return new ImageIcon(createQRImage(msg));
+   }
 
-//		// Manual operation
-//		List<QrSegment> segs = QrSegment.makeSegments("3141592653589793238462643383");
-//		QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
-//		for (int y = 0; y < qr1.size; y++) {
-//			for (int x = 0; x < qr1.size; x++) {
-//				(... paint qr1.getModule(x, y) ...)
-//			}
-//		}		
-	}
-	
-	// From https://github.com/nayuki/QR-Code-generator/blob/master/java/QrCodeGeneratorDemo.java?ts=4
-	BufferedImage toImage(QrCode qr, int scale, int border) {
-		return toImage(qr, scale, border, 0xFFFFFF, 0x000000);
-	}
+   public BufferedImage createQRImage(String msg)
+   {
+      QrCode qr0 = QrCode.encodeText(msg, QrCode.Ecc.MEDIUM);
+      BufferedImage img = toImage(qr0, getScale(), getBorder());  // See QrCodeGeneratorDemo
+      return img;
 
-	BufferedImage toImage(QrCode qr, int scale, int border, int lightColor, int darkColor) {
-		Objects.requireNonNull(qr);
-		if (scale <= 0 || border < 0)
-			throw new IllegalArgumentException("Value out of range");
-		if (border > Integer.MAX_VALUE / 2 || qr.size + border * 2L > Integer.MAX_VALUE / scale)
-			throw new IllegalArgumentException("Scale or border too large");
-		
-		BufferedImage result = new BufferedImage((qr.size + border * 2) * scale, (qr.size + border * 2) * scale, BufferedImage.TYPE_INT_RGB);
-		for (int y = 0; y < result.getHeight(); y++) {
-			for (int x = 0; x < result.getWidth(); x++) {
-				boolean color = qr.getModule(x / scale - border, y / scale - border);
-				result.setRGB(x, y, color ? darkColor : lightColor);
-			}
-		}
-		return result;
-	}
+//    // Manual operation
+//    List<QrSegment> segs = QrSegment.makeSegments("3141592653589793238462643383");
+//    QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
+//    for (int y = 0; y < qr1.size; y++) {
+//       for (int x = 0; x < qr1.size; x++) {
+//          (... paint qr1.getModule(x, y) ...)
+//       }
+//    }
+   }
 
-	public int getBorder()
-	{
-		return border;
-	}
+   public void createQRPNG(String msg, String fname) throws IOException
+   {
 
-	public void setBorder(int border)
-	{
-		this.border = border;
-	}
+      RenderedImage img = createQRImage(msg);
+      ImageIO.write(img, "png", new File(fname));
 
-	public int getScale()
-	{
-		return scale;
-	}
+//    // Manual operation
+//    List<QrSegment> segs = QrSegment.makeSegments("3141592653589793238462643383");
+//    QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
+//    for (int y = 0; y < qr1.size; y++) {
+//       for (int x = 0; x < qr1.size; x++) {
+//          (... paint qr1.getModule(x, y) ...)
+//       }
+//    }
+   }
 
-	public void setScale(int scale)
-	{
-		this.scale = scale;
-	}	
+   // From https://github.com/nayuki/QR-Code-generator/blob/master/java/QrCodeGeneratorDemo.java?ts=4
+   BufferedImage toImage(QrCode qr, int scale, int border) {
+      return toImage(qr, scale, border, 0xFFFFFF, 0x000000);
+   }
+
+   BufferedImage toImage(QrCode qr, int scale, int border, int lightColor, int darkColor) {
+      Objects.requireNonNull(qr);
+      if (scale <= 0 || border < 0)
+         throw new IllegalArgumentException("Value out of range");
+      if (border > Integer.MAX_VALUE / 2 || qr.size + border * 2L > Integer.MAX_VALUE / scale)
+         throw new IllegalArgumentException("Scale or border too large");
+
+      BufferedImage result = new BufferedImage((qr.size + border * 2) * scale, (qr.size + border * 2) * scale, BufferedImage.TYPE_INT_RGB);
+      for (int y = 0; y < result.getHeight(); y++) {
+         for (int x = 0; x < result.getWidth(); x++) {
+            boolean color = qr.getModule(x / scale - border, y / scale - border);
+            result.setRGB(x, y, color ? darkColor : lightColor);
+         }
+      }
+      return result;
+   }
+
+   public int getBorder()
+   {
+      return border;
+   }
+
+   public void setBorder(int border)
+   {
+      this.border = border;
+   }
+
+   public int getScale()
+   {
+      return scale;
+   }
+
+   public void setScale(int scale)
+   {
+      this.scale = scale;
+   }
 }
