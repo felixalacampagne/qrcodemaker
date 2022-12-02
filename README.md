@@ -18,11 +18,22 @@ which simply displays a QR code for the clipboard content is still present and c
 
 ## TODOs
 - Make it look nicer
-- pretty print account numbers and handle spaces in input
-- handle formatted structured communications, ie. containing + and / and space
+- pretty print account numbers and handle spaces in input - DONE!
+- handle formatted structured communications, ie. containing + and / and space - DONE!
 - remove values from the history
 - obfuscate the history file
 - display the QR code in the same form as the transaction
 
 Chances are I'll never do any of these as it does what I need it to and probably wont be used that often.
 Handling spaces etc. in account and communication are most likely to be actually useful.
+
+From technical aspect. Apply following UE macro to all source files:
+
+InsertMode
+ColumnModeOff
+HexOff
+TabsToSpaces
+TrimTrailingSpaces
+DosToUnix
+
+This should avoid a lot of problems when merging from one environment to another
