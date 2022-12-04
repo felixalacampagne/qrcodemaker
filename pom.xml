@@ -28,7 +28,25 @@
    <build>
       <sourceDirectory>src</sourceDirectory>
       <plugins>
-	      <plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>templating-maven-plugin</artifactId>
+            <version>1.0.0</version>
+            <executions>
+                <execution>
+                    <id>filtering-java-templates</id>
+                    <goals>
+                        <goal>filter-sources</goal>
+                    </goals>
+                <configuration>              
+                  <!-- defaults to ${basedir}/src/main/java-templates -->
+                  <sourceDirectory>java-templates</sourceDirectory>
+                  <!-- outputDirectory>${project.build.directory}/generated-sources/java-templates</outputDirectory -->
+                </configuration>                    
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
 	        <artifactId>maven-compiler-plugin</artifactId>
 	        <version>3.8.1</version>
 	        <configuration>

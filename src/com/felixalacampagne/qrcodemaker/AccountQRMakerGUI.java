@@ -34,7 +34,6 @@ public class AccountQRMakerGUI extends JFrame
    public static void main(String[] args)
    {
       AccountQRMakerGUI gui = new AccountQRMakerGUI();
-
    }
 
    class HistoryItem
@@ -216,6 +215,8 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(btnShowQR);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
 
+      
+      this.setTitle("AccountQRMakerGUI - " + Version.VERSION);
       this.pack();
       this.setVisible(true);
    }
