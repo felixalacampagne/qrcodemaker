@@ -3,13 +3,13 @@
   <groupId>com.felixalacampagne</groupId>
   <artifactId>accountqrcodemakergui</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>AccountQRCodeMakerGUI</name>
-  <description>GUI for AccountQRCodeMaker</description>
+  <name>AccountQRMakerGUI</name>
+  <description>GUI for AccountQRMaker</description>
      <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.javadoc.skip>true</maven.javadoc.skip>
       <maven.build.timestamp.format>yy.MM.dd.HHmm</maven.build.timestamp.format>
-      <timestamp>${build.localtime}</timestamp>
+      <timestamp>${build.localtime.blabla}</timestamp>
       <jackson-annotations-version>2.13.3</jackson-annotations-version>
       <nayuki-qrcodegen-version>1.5.0</nayuki-qrcodegen-version>
    </properties>
