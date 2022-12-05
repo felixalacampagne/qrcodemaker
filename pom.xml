@@ -8,8 +8,6 @@
      <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.javadoc.skip>true</maven.javadoc.skip>
-      <maven.build.timestamp.format>yy.MM.dd.HHmm</maven.build.timestamp.format>
-      <timestamp>${build.localtime.blabla}</timestamp>
       <jackson-annotations-version>2.13.3</jackson-annotations-version>
       <nayuki-qrcodegen-version>1.5.0</nayuki-qrcodegen-version>
    </properties>
@@ -28,6 +26,31 @@
    <build>
       <sourceDirectory>src</sourceDirectory>
       <plugins>
+         <!-- Stupidly the maven build timestamp does not use the local timezone there is no
+              way to tell it to do so. Google provided a solution which somehow uses build.localtime
+              but for me that just gives a value of 'build.localtime' instead of the timestamp.
+              The build-helper-maven-plugin is used below to set a variable to the time of the build using
+              a timezone but unfortunately the zone must be hard coded instead of just using the
+              locally configured timezone.
+          -->      
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>1.9.1</version>
+            <executions>
+                <execution>
+                    <id>timestamp-property</id>
+                    <goals>
+                        <goal>timestamp-property</goal>
+                    </goals>
+                    <configuration>
+                        <name>localtime</name>
+                        <pattern>yyyy-MM-dd HH:mm</pattern>
+                        <timeZone>Europe/Brussels</timeZone>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>      
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>templating-maven-plugin</artifactId>
