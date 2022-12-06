@@ -8,7 +8,9 @@ public class Version
    // Why is it that every single simple trivial thing to do with maven takes hours of
    // searching the internet to figure out how to make it work (or not even find a solution!)
    // Turns out 'build.localtime' is not actually a build property - not sure where it came
-   // from, and it really should be a property because stupidly the real variable, ie. build.timestamp
+   // from [from flactagger but didn't realise it needed all the plugin shirt to get it to work!! 
+   // Oh the wonders of clean coding and no commenting - ensures that wheel is invented over and over again],
+   // and it really should be a built-in property because stupidly the real variable, ie. build.timestamp
    // does not use the the local system time, and there is no way to make it do so!
    // So far the only workaround to obtain the real timestamp is to use yet another
    // plugin, build-helper-maven-plugin, which allows creation of a variable for the current time
