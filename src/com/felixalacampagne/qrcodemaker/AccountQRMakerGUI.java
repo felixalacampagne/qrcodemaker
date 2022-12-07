@@ -215,12 +215,7 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(btnShowQR);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
 
-      String title = Version.APPNAME + " - " + Version.VERSION;
-      if(Version.VERSION.contains("SNAPSHOT"))
-      {
-      	title = title + " (" + Version.BLDTIME + ")";
-      }
-      this.setTitle(title);
+      this.setTitle(BuildInfo.getAppTitle());
       this.pack();
       this.setVisible(true);
    }
