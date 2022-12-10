@@ -1,6 +1,6 @@
 package com.felixalacampagne.qrcodemaker;
 
-public class Version
+public class BuildInfo
 {
    public static final String VERSION = "${project.version}";
    public static final String APPNAME = "${project.name}";
@@ -19,4 +19,14 @@ public class Version
    // UTC timestamp, but that's no good as the displayed time would then depend on
    // the system timezone in use where the app is running.
    public static final String BLDTIME = "${localtime}";
+
+   public static String getAppTitle()
+   {
+      String title = BuildInfo.APPNAME + " - " + BuildInfo.VERSION;
+      if(BuildInfo.VERSION.contains("SNAPSHOT"))
+      {
+         title = title + " (" + BuildInfo.BLDTIME + ")";
+      }
+      return title;
+   }
 }
