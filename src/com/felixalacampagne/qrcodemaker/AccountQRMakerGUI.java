@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
@@ -90,6 +92,21 @@ public class AccountQRMakerGUI extends JFrame
       }
    };
 
+   private DocumentListener showQREnabler = new DocumentListener() {
+      @Override
+      public void changedUpdate(DocumentEvent e) {
+         enableQR();
+       }
+       @Override
+      public void removeUpdate(DocumentEvent e) {
+          enableQR();
+       }
+       @Override
+      public void insertUpdate(DocumentEvent e) {
+          enableQR();
+       }
+   };
+
    public AccountQRMakerGUI()
    {
       init();
@@ -104,6 +121,15 @@ public class AccountQRMakerGUI extends JFrame
       }
    };
 
+   public void enableQR()
+   {
+      boolean enabled = ! ( txtName.getText().isEmpty() ||
+            txtIBAN.getText().isEmpty() ||
+            ! AccountTransaction.isValidAmount(txtAmount.getText()) ||
+            txtCommunication.getText().isEmpty());
+
+      this.btnShowQR.setEnabled(enabled);
+   }
 
    public void setFromHistory()
    {
@@ -141,7 +167,7 @@ public class AccountQRMakerGUI extends JFrame
       // There is no border. Could brute force it by adding padding on left and right
       // but there must be an easier way.
       // Currently using hand made padding to vertically align the textboxes, there must
-      // be a better way!
+      // be a better way! (There is, it's called C#!!)
       cmbHistory.addActionListener(historySelected);
       cmbHistory.setEditable(false);
 
@@ -173,6 +199,7 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(Box.createRigidArea(new Dimension(60, 0)));
       pnl.add(txtName);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
+      txtName.getDocument().addDocumentListener(showQREnabler);
 
       lbl = new JLabel("IBAN:");
       lbl.setLabelFor(txtIBAN);
@@ -184,6 +211,7 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(Box.createRigidArea(new Dimension(66, 0)));
       pnl.add(txtIBAN);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
+      txtIBAN.getDocument().addDocumentListener(showQREnabler);
 
       lbl = new JLabel("Amount:");
       lbl.setLabelFor(txtAmount);
@@ -195,6 +223,7 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(Box.createRigidArea(new Dimension(49, 0)));
       pnl.add(txtAmount);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
+      txtAmount.getDocument().addDocumentListener(showQREnabler);
 
       lbl = new JLabel("Communication:");
       lbl.setLabelFor(txtCommunication);
@@ -206,8 +235,9 @@ public class AccountQRMakerGUI extends JFrame
       pnl.add(Box.createRigidArea(new Dimension(4, 0)));
       pnl.add(txtCommunication);
       this.getContentPane().add(pnl, BorderLayout.CENTER);
+      txtCommunication.getDocument().addDocumentListener(showQREnabler);
 
-      btnShowQR.setEnabled(true);
+      btnShowQR.setEnabled(false);
       btnShowQR.addActionListener(showQRAction);
       pnl = new JPanel();
       bl = new BoxLayout(pnl,BoxLayout.X_AXIS);

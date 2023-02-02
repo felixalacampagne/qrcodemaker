@@ -1,6 +1,8 @@
 package com.felixalacampagne.qrcodemaker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -311,6 +313,44 @@ class AccountQRMakerTest
    	atxn = new AccountTransaction("test", "be1234567", "0,00", "test");
    	dispiban = atxn.displayIBAN();
    	assertEquals("BE12 3456 7", dispiban);
+
+   }
+
+   @Test
+   void testValidAmount()
+   {
+      String amt;
+
+      amt = "100.20";
+      assertTrue(AccountTransaction.isValidAmount(amt), amt);
+      amt = "100.";
+      assertTrue(AccountTransaction.isValidAmount(amt), amt);
+      amt = "100";
+      assertTrue(AccountTransaction.isValidAmount(amt), amt);
+      amt = "100,20";
+      assertTrue(AccountTransaction.isValidAmount(amt), amt);
+      amt = "100,";
+      assertTrue(AccountTransaction.isValidAmount(amt), amt);
+
+      amt = "";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = ",01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = ".01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "123.,01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "123,.01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "123..01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "123.0.1";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "1,230.01";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+      amt = "stachocash";
+      assertFalse(AccountTransaction.isValidAmount(amt), amt);
+
 
    }
 }
