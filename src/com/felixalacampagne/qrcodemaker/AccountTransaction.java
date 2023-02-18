@@ -11,6 +11,13 @@ public class AccountTransaction
    private String amount;
    private String communication;
 
+   public static boolean isValidAmount(String amtstr)
+   {
+      return amtstr.matches("\\d+(\\.|,){0,1}\\d{0,2}");
+   }
+
+
+
    protected AccountTransaction()
    {
       // For JSON
@@ -61,6 +68,9 @@ public class AccountTransaction
 
    protected String normalizeAmount(String amt)
    {
+      if(amt.isEmpty())
+         return amt;
+
       String amount = amt.replace(",", ".");
       if(!amount.contains("."))
       {
@@ -79,4 +89,5 @@ public class AccountTransaction
    {
       return iban.replaceAll("([A-Za-z\\d]{4,4})", "$0 ").toUpperCase().trim();
    }
+
 }

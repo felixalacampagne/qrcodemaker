@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.felixalacampagne</groupId>
   <artifactId>accountqrcodemakergui</artifactId>
-  <version>1.0.1-RELEASE</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>AccountQRMakerGUI</name>
   <description>GUI for AccountQRMaker</description>
      <properties>
@@ -26,7 +26,7 @@
    <build>
       <sourceDirectory>src</sourceDirectory>
       <plugins>
-         <!-- Stupidly the maven build timestamp does not use the local timezone there is no
+         <!-- Stupidly the maven build timestamp does not use the local timezone and there is no
               way to tell it to do so. Google provided a solution which somehow uses build.localtime
               but for me that just gives a value of 'build.localtime' instead of the timestamp.
               The build-helper-maven-plugin is used below to set a variable to the time of the build using
